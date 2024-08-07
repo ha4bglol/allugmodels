@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Options</title>
+    <style>
+        /* Center the content */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 150vh;
+            margin: 0;
+            padding: 20px; /* Add some padding for better appearance on smaller screens */
+            box-sizing: border-box;
+            text-align: center; /* Center align text */
+        }
+        #paypal-button-container {
+            width: 200%;
+            max-width: 500px; /* Reduce the maximum width */
+            padding: 10px; /* Reduce padding for a more compact look */
+            box-sizing: border-box;
+        }
+        #crypto-button {
+            margin-top: 20px; /* Add space between PayPal and Crypto buttons */
+            padding: 15px 20px;
+            background-color: #0070ba; /* PayPal blue background */
+            color: white; /* White text */
+            border: none;
+            cursor: pointer;
+            font-size: 16px; /* Larger text */
+            font-weight: bold;
+            border-radius: 5px; /* Rounded corners */
+            width: 100%; /* Full width like PayPal buttons */
+            max-width: 500px;
+            box-sizing: border-box;
+        }
+        #crypto-button:hover {
+            background-color: #005fa3; /* Darker blue on hover */
+        }
+        #title-text {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 40px; /* Space below the title text */
+        }
+    </style>
+</head>
+<body>
+    <!-- Title text -->
+    <div id="title-text">9.99$ - ONE MONTH - JASMINE FOX</div>
+
+    <!-- PayPal button container -->
+    <div id="paypal-button-container"></div>
+
+    <!-- Crypto Payment button -->
+    <button id="crypto-button" onclick="redirectToCryptoPayment()">Crypto Payment</button>
+
+    <!-- Include the PayPal JavaScript SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AeNb1dQsmIsfmnBM6Hk85jGWg8AdAOGXwnN5GL5thxhtXsX6i-S4pjojMWTON3OzcReOLw05ht742Bo8"></script>
+    <script>
+        // Render the PayPal button
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '9.99' // Amount to be charged
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    // Redirect to the success page
+                    window.location.href = 'https://t.me/+ccc--jTqxPcyZWU0';
+                });
+            },
+            onError: function(err) {
+                // Handle errors here
+                console.error('PayPal error:', err);
+            }
+        }).render('#paypal-button-container'); // Display the PayPal button
+
+        // Redirect to the chosen link for Crypto Payment
+        function redirectToCryptoPayment() {
+            window.location.href = 'https://nowpayments.io/payment?iid=5043678194';
+        }
+    </script>
+</body>
+</html>
